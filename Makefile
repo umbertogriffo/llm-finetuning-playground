@@ -14,9 +14,6 @@ install_pre_commit:
 
 setup: install install_pre_commit
 
-test:
-	uv run pytest --log-cli-level=DEBUG --capture=tee-sys -v
-
 tidy:
 	uv run ruff format --exclude=.venv .
 	uv run ruff check --exclude=.venv . --fix

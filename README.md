@@ -23,6 +23,24 @@ The training took `10h` on a `Tesla T4`.
 Install `uv` with the official installer by following
 this [link](https://docs.astral.sh/uv/getting-started/installation/).
 
+## Bootstrap Environment
+
+To easily install the dependencies we created a make file.
+
+### How to use the make file
+
+> [!IMPORTANT]
+> Run `Setup` as your init command (or after `Clean`).
+
+* Check: ```make check```
+    * Use it to check that `which pip3` and `which python3` points to the right path.
+* Setup: ```make setup```
+    * Creates an environment and installs all dependencies.
+* Tidy up the code: ```make tidy```
+    * Run Ruff check and format.
+* Clean: ```make clean```
+    * Removes the environment and all cached files.
+
 ### Additional dependencies
 
 Unsloth attempts to compile `llama.cpp` for `GGUF` model conversion, and it requires:
