@@ -12,6 +12,7 @@ Defined the rewarding functions to let the model learn how to reason on them, we
 which contains grade school math problems to demonstrate idea.
 
 The training took `10h` on a `Tesla T4`.
+You can find the trained model on [Hugging Face](https://huggingface.co/ugriffo/Qwen2.5-3B-Instruct-Math-Reasoning-GGUF).
 
 ## Prerequisites
 * Python 3.10+
