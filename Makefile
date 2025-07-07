@@ -30,3 +30,7 @@ clean:
 	echo "Cleaning the cache..."
 	rm -rf .pytest_cache
 	rm -rf .ruff_cache
+
+finetune:
+	echo "Finetuning LLM"
+	python src/finetune.py

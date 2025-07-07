@@ -48,6 +48,13 @@ Unsloth attempts to compile `llama.cpp` for `GGUF` model conversion, and it requ
 sudo apt-get install pciutils build-essential cmake curl libcurl4-openssl-dev -y
 ```
 
+## Finetuning the model
+
+We can run the fine-tuning with the following command:
+```shell
+make finetune
+```
+
 ## Resources
 - `unsloth`:
   - [Wiki](https://github.com/unslothai/unsloth/wiki) 
