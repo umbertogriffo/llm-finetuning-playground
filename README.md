@@ -14,6 +14,8 @@ which contains grade school math problems.
 The training took `10h` on a `Tesla T4`.
 You can find the trained model on [Hugging Face](https://huggingface.co/ugriffo/Qwen2.5-3B-Instruct-Math-Reasoning-GGUF).
 
+![example.png](images/example.png)
+
 ## Prerequisites
 * Python 3.10+
 * GPU supporting CUDA 12.1+
