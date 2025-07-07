@@ -1,4 +1,4 @@
-from data_prep import get_gsm8k_questions, extract_xml_answer, get_gsm8k_questions_with_no_sys_prompt
+from data_prep import get_gsm8k_questions, extract_answer_from_model_output, get_gsm8k_questions_with_no_sys_prompt
 from finetune import initialize_model, setup_peft_model
 from vllm import SamplingParams
 
@@ -41,7 +41,7 @@ def evaluate(model, tokenizer, dataset, num_of_answers, lora_request=None):
         print(f"Answer: {answer}")
         print(f"Model answer: {output}")
 
-        if answer in clean_numbers(extract_xml_answer(output)):
+        if answer in clean_numbers(extract_answer_from_model_output(output)):
             num_correct_answers = num_correct_answers + 1
 
     return num_correct_answers

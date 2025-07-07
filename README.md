@@ -5,11 +5,11 @@
 > The code has been tested on `Instance type` `g4dn.4xlarge` (Tesla T4. Num GPUs = 1. Max memory: 14.563 GB. Platform: Linux.
 > Torch: 2.6.0+cu124. CUDA: 7.5. CUDA Toolkit: 12.4. Triton: 3.2.0)
 
-We want to train a math reasoning model, converting a standard model like `Qwen2.5 3B` into a full-fledged reasoning model using GRPO (Group Relative Policy Optimization), 
-an RL algorithm that optimizes responses using reward functions. 
+We want to train a math reasoning model by converting a standard model, such as `Qwen2.5 3B`, into a math reasoning model using GRPO (Group Relative Policy Optimization), 
+a reinforcement learning algorithm that optimizes responses based on reward functions.
 
-Defined the rewarding functions to let the model learn how to reason on them, we fine-tuned Qwen on [OpenAI's GSM8K dataset](https://huggingface.co/datasets/openai/gsm8k),
-which contains grade school math problems to demonstrate idea.
+Defined the rewarding functions to let the model learn how to reason on them, we fine-tuned `Qwen2.5 3B` on [OpenAI's GSM8K dataset](https://huggingface.co/datasets/openai/gsm8k),
+which contains grade school math problems.
 
 The training took `10h` on a `Tesla T4`.
 You can find the trained model on [Hugging Face](https://huggingface.co/ugriffo/Qwen2.5-3B-Instruct-Math-Reasoning-GGUF).
@@ -65,3 +65,4 @@ make finetune
     - [Reinforcement Learning Guide](https://docs.unsloth.ai/basics/reinforcement-learning-guide)
     - [Long-context GRPO](https://unsloth.ai/blog/grpo)
 - [Make Llama 3.1 8B talk in Rick Sanchez’s style](https://github.com/neural-maze/neural-hub/tree/master/rick-llm)
+- [Reinforcement Learning Pipeline for a Language Model](https://github.com/aburkov/theLMbook/blob/main/GRPO_Qwen_0_5_Instruct.ipynb)

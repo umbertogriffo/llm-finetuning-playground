@@ -12,26 +12,32 @@ Respond in the following format:
 </answer>
 """
 
-XML_COT_FORMAT = """\
-<reasoning>
-{reasoning}
-</reasoning>
-<answer>
-{answer}
-</answer>
-"""
 
-def extract_xml_answer(text: str) -> str:
-    answer = text.split("<answer>")[-1]
-    answer = answer.split("</answer>")[0]
-    return answer.strip()
+def extract_answer_from_model_output(text: str) -> str | None:
+    """
+    Extracts the value from the last <answer> tag in the text.
+    Returns None if no valid answer is found.
+    """
+    # Split on <answer> and take everything after the last occurrence
+    parts = text.split("<answer>")
+    if len(parts) < 2:  # No <answer> tag found
+        return None
 
-def extract_hash_answer(text: str) -> str | None:
+    last_part = parts[-1]
+
+    # Extract content up to </answer>
+    if "</answer>" not in last_part:
+        return None
+
+    answer = last_part.split("</answer>")[0].strip()
+    return None if answer == "..." else answer
+
+def extract_answer_from_dataset(text: str) -> str | None:
     if "####" not in text:
         return None
     return text.split("####")[1].strip()
 
-# uncomment middle messages for 1-shot prompting
+
 def get_gsm8k_questions(split = "train") -> Dataset:
     data = load_dataset('openai/gsm8k', 'main')[split] # type: ignore
     data = data.map(lambda x: { # type: ignore
@@ -39,9 +45,9 @@ def get_gsm8k_questions(split = "train") -> Dataset:
             {'role': 'system', 'content': SYSTEM_PROMPT},
             {'role': 'user', 'content': x['question']}
         ],
-        'answer': extract_hash_answer(x['answer'])
-    }) # type: ignore
-    return data # type: ignore
+        'answer': extract_answer_from_dataset(x['answer'])
+    })
+    return data
 
 def get_gsm8k_questions_with_no_sys_prompt(split ="train") -> Dataset:
     data = load_dataset('openai/gsm8k', 'main')[split] # type: ignore
@@ -49,7 +55,7 @@ def get_gsm8k_questions_with_no_sys_prompt(split ="train") -> Dataset:
         'prompt': [
             {'role': 'user', 'content': x['question']}
         ],
-        'answer': extract_hash_answer(x['answer'])
+        'answer': extract_answer_from_dataset(x['answer'])
     }) # type: ignore
     return data # type: ignore
 
@@ -60,7 +66,7 @@ def correctness_reward_func(prompts, completions, answer, **kwargs) -> list[floa
     """
     responses = [completion[0]['content'] for completion in completions]
     q = prompts[0][-1]['content']
-    extracted_responses = [extract_xml_answer(r) for r in responses]
+    extracted_responses = [extract_answer_from_model_output(r) for r in responses]
     # print('-'*20, f"Question:\n{q}", f"\nAnswer:\n{answer[0]}", f"\nResponse:\n{responses[0]}", f"\nExtracted:\n{extracted_responses[0]}")
     return [2.0 if r == a else 0.0 for r, a in zip(extracted_responses, answer)]
 
@@ -69,7 +75,7 @@ def int_reward_func(completions, **kwargs) -> list[float]:
     Encourages integer-only answers.
     """
     responses = [completion[0]['content'] for completion in completions]
-    extracted_responses = [extract_xml_answer(r) for r in responses]
+    extracted_responses = [extract_answer_from_model_output(r) for r in responses]
     return [0.5 if r.isdigit() else 0.0 for r in extracted_responses]
 
 def strict_format_reward_func(completions, **kwargs) -> list[float]:
