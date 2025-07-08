@@ -61,7 +61,8 @@ make finetune
 ## Resources
 - `unsloth`:
   - [Wiki](https://github.com/unslothai/unsloth/wiki) 
-  - [unsloth notebooks](https://github.com/unslothai/notebooks/)
+  - [Unsloth Notebooks](https://github.com/unslothai/notebooks/)
+  - [How To Fine-tune & Run LLMs](https://docs.unsloth.ai/basics/tutorials-how-to-fine-tune-and-run-llms)
   - RL:
     - [Train your own R1 reasoning model with Unsloth (GRPO)](https://unsloth.ai/blog/r1-reasoning)
     - [Reinforcement Learning Guide](https://docs.unsloth.ai/basics/reinforcement-learning-guide)
